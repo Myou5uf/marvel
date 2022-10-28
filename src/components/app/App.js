@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
@@ -7,64 +7,37 @@ import CharInfo from "../charInfo/CharInfo";
 import decoration from '../../resources/img/vision.png';
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
-class App extends React.Component {
+const App = () => {
 
-    constructor(props) {
-        super(props);
+    const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+    const [visibleBgImage, setVisibleBgImage] = useState(false);
 
-        this.state = {
-            selectedCharacterId: null,
-            visibleBgImage: false,
-        }
+    const changeSelectedCharacterId = (id) => {
+        setSelectedCharacterId(id);
     }
 
-    setSelectedCharacterId = (id) => {
-        this.setState({
-            selectedCharacterId: id
-        })
+    const changeVisibleBgImage = (visible) => {
+        setVisibleBgImage(visible);
     }
 
-    setVisibleBgImage = (visible) => {
-        this.setState({
-            visibleBgImage: visible
-        })
-    }
-
-
-    render() {
-        const {selectedCharacterId, visibleBgImage} = this.state;
-
-        return (
-            <div className="app">
-                <AppHeader/>
-                <main>
-                    <RandomChar/>
-                    <div className="char__content">
-                        <CharList selectedCharacterId={selectedCharacterId} setSelectedCharacterId={this.setSelectedCharacterId} setVisibleBgImage={this.setVisibleBgImage}/>
-                       <ErrorBoundary>
-                           <CharInfo selectedCharacterId={selectedCharacterId}/>
-                       </ErrorBoundary>
-                    </div>
-                    <img style={visibleBgImage ? null : {display: "none"}} className="bg-decoration" src={decoration} alt="vision"/>
-                </main>
-            </div>
-        )
-    }
+    return (
+        <div className="app">
+            <AppHeader/>
+            <main>
+                <RandomChar/>
+                <div className="char__content">
+                    <CharList selectedCharacterId={selectedCharacterId}
+                              setSelectedCharacterId={changeSelectedCharacterId}
+                              setVisibleBgImage={changeVisibleBgImage}/>
+                    <ErrorBoundary>
+                        <CharInfo selectedCharacterId={selectedCharacterId}/>
+                    </ErrorBoundary>
+                </div>
+                <img style={visibleBgImage ? null : {display: "none"}} className="bg-decoration" src={decoration}
+                     alt="vision"/>
+            </main>
+        </div>
+    )
 }
 
 export default App;
-
-
-
-/*
-
-echo "# marvel" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M master
-git remote add origin https://github.com/Myou5uf/marvel.git
-git push -u origin master
-
-
-*/
