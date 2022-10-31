@@ -7,17 +7,11 @@ export default class MarvelServices {
 
     static async getCharacters(limit = 9, offset = 210) {
         const response = await axios.get(`${MarvelServices._apiBase}characters?limit=${limit}&offset=${offset}&${MarvelServices._apiKey}`);
-        if(response.status !== 200){
-            throw new Error(`Could not fetch ${MarvelServices._apiBase}characters?limit=${limit}&offset=${offset}&apikey=14..., status: ${response.status}`);
-        }
         return response.data.data.results.map(character => MarvelServices._transformCharacter(character));
     }
 
     static async getCharacter(id) {
         const response = await axios.get(`${MarvelServices._apiBase}characters/${id}?${MarvelServices._apiKey}`);
-        if(response.status !== 200){
-            throw new Error(`Could not fetch ${MarvelServices._apiBase}characters/${id}?apikey=14..., status: ${response.status}`);
-        }
         return MarvelServices._transformCharacter(response.data.data.results[0]);
     }
 
