@@ -27,21 +27,6 @@ const CharList = ({selectedCharacterId, setSelectedCharacterId, setVisibleBgImag
         charFetching(limit, offset, true);
     }, []);
 
-    const onRequest = async (limit, offset) => {
-        // try {
-        //     setNewCharactersLoading(true);
-        //     const characters = await MarvelServices.getCharacters(limit, offset);
-        //     setNewCharactersLoaded(characters);
-        //     setVisibleBgImage(true);
-        // } catch (error) {
-        //     setError(error);
-        // } finally {
-        //     setLoading(false);
-        //     setNewCharactersLoading(false);
-        //     setVisibleBgImage(true);
-        // }
-    }
-
     const setNewCharactersLoaded = (newCharactersList) => {
         let ended = false;
         if (newCharactersList.length < 9) {

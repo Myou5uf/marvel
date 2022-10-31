@@ -9,8 +9,6 @@ import {useHttp} from "../../hooks/useHttp";
 const RandomChar = () => {
 
     const [character, setCharacter] = useState({});
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(false);
     let timerId;
     const [randomFetching, randomLoading, randomError, randomClearError] = useHttp(async () => {
         randomClearError();
