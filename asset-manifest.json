@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/marvel/static/css/main.f97eb19b.css",
-    "main.js": "/marvel/static/js/main.2cb5507d.js",
+    "main.css": "/marvel/static/css/main.e9da1463.css",
+    "main.js": "/marvel/static/js/main.fda1b41d.js",
+    "static/media/x-men.png": "/marvel/static/media/x-men.41b39e1944f148b7a123.png",
+    "static/media/UW.png": "/marvel/static/media/UW.422636b41d853d832a20.png",
     "static/media/vision.png": "/marvel/static/media/vision.067d4ae1936d64a577ce.png",
     "static/media/mjolnir.png": "/marvel/static/media/mjolnir.61f31e1809f12183a524.png",
     "static/media/error.gif": "/marvel/static/media/error.42292aa12b6bc303ce99.gif",
     "index.html": "/marvel/index.html",
-    "main.f97eb19b.css.map": "/marvel/static/css/main.f97eb19b.css.map",
-    "main.2cb5507d.js.map": "/marvel/static/js/main.2cb5507d.js.map"
+    "main.e9da1463.css.map": "/marvel/static/css/main.e9da1463.css.map",
+    "main.fda1b41d.js.map": "/marvel/static/js/main.fda1b41d.js.map"
   },
   "entrypoints": [
-    "static/css/main.f97eb19b.css",
-    "static/js/main.2cb5507d.js"
+    "static/css/main.e9da1463.css",
+    "static/js/main.fda1b41d.js"
   ]
 }
