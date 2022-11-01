@@ -4,6 +4,7 @@ import {useHttp} from "../../hooks/useHttp";
 import MarvelServices from "../../services/MarvelServices";
 import ErrorMessage from "../errorMessage/errorMessage";
 import Spinner from "../spinner/Spinner";
+import {Link, Outlet} from "react-router-dom";
 
 const ComicsList = () => {
     const [comics, setComics] = useState([]);
@@ -13,7 +14,7 @@ const ComicsList = () => {
     const [newComicsLoading, setNewComicsLoading] = useState(false);
     const [comicsFetching, loading, error] = useHttp(async (limit = 8, offset = 210, initial = false) => {
         initial ? setNewComicsLoading(false) : setNewComicsLoading(true);
-        const comics = await MarvelServices.getComics(limit, offset);
+        const comics = await MarvelServices.getAllComics(limit, offset);
         setNewComics(comics);
         setNewComicsLoading(false);
     });
@@ -44,11 +45,11 @@ const ComicsList = () => {
                 {comics.map((comicBook, index) => {
                     return (
                         <li className="comics__item" key={index}>
-                            <a href={comicBook.homepage}>
+                            <Link to={`${comicBook.id}`}>
                                 <img src={comicBook.thumbnail} alt="ultimate war" className="comics__item-img"/>
                                 <div className="comics__item-name">{comicBook.title}</div>
                                 <div className="comics__item-price">{comicBook.price}</div>
-                            </a>
+                            </Link>
                         </li>
                     )
                 })}

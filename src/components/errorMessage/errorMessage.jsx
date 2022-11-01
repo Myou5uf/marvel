@@ -3,8 +3,8 @@ import img from "./error.gif";
 
 const ErrorMessage = ({error}) => {
     return (
-        <div style={{display: "flex", flexDirection: "row", alignItems: "center", padding: "5px 10px"}}>
-            <p style={{fontSize: "24px", color: "red"}}>{error.message}</p>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 10px"}}>
+            <p style={{fontSize: "24px", color: "red"}}>{error}</p>
             <img
                 style={{
                     display: "block",
@@ -13,7 +13,7 @@ const ErrorMessage = ({error}) => {
                     objectFit: "contain",
                     margin: "0 auto"
                 }}
-                src={img} alt="Error message"
+                src={img} alt="ErrorPage message"
             />
         </div>
     );

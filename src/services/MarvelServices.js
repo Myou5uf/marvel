@@ -14,9 +14,15 @@ export default class MarvelServices {
         return MarvelServices._transformCharacter(response.data.data.results[0]);
     }
 
-    static async getComics(limit = 8, offset = 210) {
+    static async getAllComics(limit = 8, offset = 210) {
         const response = await axios.get(`${MarvelServices._apiBase}comics?limit=${limit}&offset=${offset}&${MarvelServices._apiKey}`);
         return response.data.data.results.map(comics => MarvelServices._transformComics(comics));
+    }
+
+    static async getComics(id) {
+        const response = await axios.get(`${MarvelServices._apiBase}comics/${id}?${MarvelServices._apiKey}`);
+        console.log(response.data.data.results[0]);
+        return MarvelServices._transformComics(response.data.data.results[0]);
     }
 
     static _transformCharacter = (character) => {
@@ -39,7 +45,8 @@ export default class MarvelServices {
             description: comics.description,
             thumbnail: comics.thumbnail.path + "." + comics.thumbnail.extension,
             homepage: comics.urls[0].url,
-            price: comics.prices[0].price
+            price: comics.prices[0].price,
+            pageCount: comics.pageCount,
         }
     }
 }
