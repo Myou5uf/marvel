@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
-import './charList.scss';
+import React, { useEffect, useState } from "react";
+import "./charList.scss";
 import MarvelServices from "../../services/MarvelServices";
 import ErrorMessage from "../errorMessage/errorMessage";
 import Spinner from "../spinner/Spinner";
 import PropTypes from "prop-types";
-import {useHttp} from "../../hooks/useHttp";
+import { useHttp } from "../../hooks/useHttp";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-const CharList = ({selectedCharacterId, setSelectedCharacterId, setVisibleBgImage}) => {
-
+const CharList = ({ selectedCharacterId, setSelectedCharacterId, setVisibleBgImage }) => {
     const [characters, setCharacters] = useState([]);
 
     const [newCharactersLoading, setNewCharactersLoading] = useState(false);
@@ -33,68 +33,74 @@ const CharList = ({selectedCharacterId, setSelectedCharacterId, setVisibleBgImag
             ended = true;
         }
 
-        setCharacters(characters => [...characters, ...newCharactersList]);
-        setOffset(offset => offset + limit);
+        setCharacters((characters) => [...characters, ...newCharactersList]);
+        setOffset((offset) => offset + limit);
         setCharactersEnded(ended);
-    }
+    };
 
-    const errorMessage = charError ? <ErrorMessage error={charError}/> : null;
-    const spinner = charLoading && !newCharactersLoading ? <Spinner/> : null;
+    const errorMessage = charError ? <ErrorMessage error={charError} /> : null;
+    const spinner = charLoading && !newCharactersLoading ? <Spinner /> : null;
 
     return (
         <div className="char__list">
             {errorMessage}
             {spinner}
-            <View characters={characters} selectedCharacterId={selectedCharacterId}
-                  setSelectedCharacterId={setSelectedCharacterId}/>
+            <View
+                characters={characters}
+                selectedCharacterId={selectedCharacterId}
+                setSelectedCharacterId={setSelectedCharacterId}
+            />
             <button
                 className="button button__main button__long"
                 disabled={newCharactersLoading}
                 onClick={() => charFetching(limit, offset, false)}
-                style={{display: charactersEnded ? "none" : "block"}}
-            >
+                style={{ display: charactersEnded ? "none" : "block" }}>
                 <div className="inner">load more</div>
             </button>
         </div>
     );
-}
+};
 
-const View = ({characters, selectedCharacterId, setSelectedCharacterId}) => {
-
+const View = ({ characters, selectedCharacterId, setSelectedCharacterId }) => {
     return (
         <ul className="char__grid">
-            {characters.map((character, index) => {
+            <TransitionGroup component={null}>
+                {characters.map((character, index) => {
                     const classes = ["char__item"];
                     if (selectedCharacterId === character.id) classes.push("char__item_selected");
                     return (
-                        <li
-                            className={classes.join(" ")}
-                            key={character.id}
-                            tabIndex={index}
-                            onClick={() => setSelectedCharacterId(character.id)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Tab" || e.key === "Enter") {
-                                    setSelectedCharacterId(character.id);
-                                }
-                            }}
-                        >
-                            <img
-                                style={character.thumbnail.includes("image_not_available") ? {objectFit: "unset"} : null}
-                                src={character.thumbnail}
-                                alt="abyss"
-                            />
-                            <div className="char__name">{character.name}</div>
-                        </li>
-                    )
-                }
-            )}
+                        <CSSTransition key={character.id} timeout={500} classNames="char__item">
+                            <li
+                                className={classes.join(" ")}
+                                tabIndex={index}
+                                onClick={() => setSelectedCharacterId(character.id)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Tab" || e.key === "Enter") {
+                                        setSelectedCharacterId(character.id);
+                                    }
+                                }}>
+                                <img
+                                    style={
+                                        character.thumbnail.includes("image_not_available")
+                                            ? { objectFit: "unset" }
+                                            : null
+                                    }
+                                    src={character.thumbnail}
+                                    alt="abyss"
+                                />
+                                <div className="char__name">{character.name}</div>
+                            </li>
+                        </CSSTransition>
+                    );
+                })}
+            </TransitionGroup>
         </ul>
-    )
-}
+    );
+};
 
 CharList.propTypes = {
     setSelectedCharacterId: PropTypes.func,
-    setVisibleBgImage: PropTypes.func
-}
+    setVisibleBgImage: PropTypes.func,
+};
 
 export default CharList;
