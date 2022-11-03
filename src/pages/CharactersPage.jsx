@@ -5,6 +5,7 @@ import ErrorBoundary from "../components/errorBoundary/ErrorBoundary";
 import CharInfo from "../components/charInfo/CharInfo";
 import decoration from "../resources/img/vision.png";
 import MyForm from "../components/myForm/MyForm";
+import { Helmet } from "react-helmet";
 
 const CharactersPage = () => {
     const [selectedCharacterId, setSelectedCharacterId] = useState(null);
@@ -15,6 +16,10 @@ const CharactersPage = () => {
 
     return (
         <>
+            <Helmet>
+                <meta name="description" content="Marvel information portal" />
+                <title>Marvel information portal</title>
+            </Helmet>
             <RandomChar />
             <div className="char__content">
                 <CharList
