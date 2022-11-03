@@ -5,8 +5,10 @@ export default class MarvelServices {
     static _apiKey = "apikey=14c80cf078481fb3ded0db419a38bd66";
 
     static async getCharacters(limit = 9, offset = 210) {
-        const response = await axios.get(`${MarvelServices._apiBase}characters?limit=${limit}&offset=${offset}&${MarvelServices._apiKey}`);
-        return response.data.data.results.map(character => MarvelServices._transformCharacter(character));
+        const response = await axios.get(
+            `${MarvelServices._apiBase}characters?limit=${limit}&offset=${offset}&${MarvelServices._apiKey}`
+        );
+        return response.data.data.results.map((character) => MarvelServices._transformCharacter(character));
     }
 
     static async getCharacter(id) {
@@ -14,14 +16,20 @@ export default class MarvelServices {
         return MarvelServices._transformCharacter(response.data.data.results[0]);
     }
 
+    static async getCharacterByName(name) {
+        const response = await axios.get(`${MarvelServices._apiBase}characters?name=${name}&${MarvelServices._apiKey}`);
+        return response.data.data.results;
+    }
+
     static async getAllComics(limit = 8, offset = 210) {
-        const response = await axios.get(`${MarvelServices._apiBase}comics?limit=${limit}&offset=${offset}&${MarvelServices._apiKey}`);
-        return response.data.data.results.map(comics => MarvelServices._transformComics(comics));
+        const response = await axios.get(
+            `${MarvelServices._apiBase}comics?limit=${limit}&offset=${offset}&${MarvelServices._apiKey}`
+        );
+        return response.data.data.results.map((comics) => MarvelServices._transformComics(comics));
     }
 
     static async getComics(id) {
         const response = await axios.get(`${MarvelServices._apiBase}comics/${id}?${MarvelServices._apiKey}`);
-        console.log(response.data.data.results[0]);
         return MarvelServices._transformComics(response.data.data.results[0]);
     }
 
@@ -33,9 +41,9 @@ export default class MarvelServices {
             thumbnail: character.thumbnail.path + "." + character.thumbnail.extension,
             homepage: character.urls[0].url,
             wiki: character.urls[1].url,
-            comics: character.comics.items
-        }
-    }
+            comics: character.comics.items,
+        };
+    };
 
     static _transformComics = (comics) => {
         return {
@@ -47,6 +55,6 @@ export default class MarvelServices {
             homepage: comics.urls[0].url,
             price: comics.prices[0].price,
             pageCount: comics.pageCount,
-        }
-    }
+        };
+    };
 }

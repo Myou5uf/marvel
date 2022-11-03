@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
-import './charInfo.scss';
+import React, { useEffect, useState } from "react";
+import "./charInfo.scss";
 import MarvelServices from "../../services/MarvelServices";
 import ErrorMessage from "../errorMessage/errorMessage";
 import Spinner from "../spinner/Spinner";
 import Skeleton from "../skeleton/Skeleton";
-import PropTypes from 'prop-types';
-import {useHttp} from "../../hooks/useHttp";
+import PropTypes from "prop-types";
+import { useHttp } from "../../hooks/useHttp";
 
-const CharInfo = ({selectedCharacterId}) => {
+const CharInfo = ({ selectedCharacterId }) => {
     const [character, setCharacter] = useState(null);
     const [updateCharacter, loading, error, charClearError] = useHttp(async (characterID) => {
         if (!characterID) {
@@ -22,10 +22,10 @@ const CharInfo = ({selectedCharacterId}) => {
         updateCharacter(selectedCharacterId);
     }, [selectedCharacterId]);
 
-    const skeleton =  character || loading || error ? null : <Skeleton/>;
-    const errorMessage = error ? <ErrorMessage error={error}/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error || !character) ? <View character={character}/> : null;
+    const skeleton = character || loading || error ? null : <Skeleton />;
+    const errorMessage = error ? <ErrorMessage error={error} /> : null;
+    const spinner = loading ? <Spinner /> : null;
+    const content = !(loading || error || !character) ? <View character={character} /> : null;
     // this.foo.bar = 0; // testing for ErrorBoundary
 
     return (
@@ -36,15 +36,14 @@ const CharInfo = ({selectedCharacterId}) => {
             {content}
         </div>
     );
-}
+};
 
-
-const View = ({character}) => {
+const View = ({ character }) => {
     return (
         <>
             <div className="char__basics">
                 <img
-                    style={character.thumbnail?.includes("image_not_available") ? {objectFit: "contain"} : null}
+                    style={character.thumbnail?.includes("image_not_available") ? { objectFit: "contain" } : null}
                     src={character.thumbnail}
                     alt="abyss"
                 />
@@ -60,24 +59,22 @@ const View = ({character}) => {
                     </div>
                 </div>
             </div>
-            <div className="char__descr">
-                {character.description}
-            </div>
+            <div className="char__descr">{character.description}</div>
             <div className="char__comics">Comics:</div>
             <ul className="char__comics-list">
                 {character.comics.length ? null : "There is no comics with this character"}
-                {character.comics.map((item, index) =>
+                {character.comics.map((item, index) => (
                     <li key={index} className="char__comics-item">
                         {item.name}
                     </li>
-                )}
+                ))}
             </ul>
         </>
-    )
-}
+    );
+};
 
 CharInfo.propTypes = {
     selectedCharacterId: PropTypes.number,
-}
+};
 
 export default CharInfo;
